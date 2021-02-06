@@ -1,4 +1,4 @@
-import StarShip from "./Starship";
+import Starship from "./Starship";
 
 export default class StarWarsUniverse {
     constructor() {
@@ -59,7 +59,7 @@ export default class StarWarsUniverse {
         let filteredShipData = starShipsRawData.filter((shipRawData) => this._isValidConsumable(shipRawData) && this._isValidPassenger(shipRawData));
 
         filteredShipData.forEach((currentShip) => {
-            this.starships.push(new StarShip(currentShip.name, currentShip.consumables, currentShip.passengers));
+            this.starships.push(new Starship(currentShip.name, currentShip.consumables, currentShip.passengers));
         });
 
     }
