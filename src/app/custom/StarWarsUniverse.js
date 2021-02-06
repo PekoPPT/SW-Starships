@@ -27,7 +27,7 @@ export default class StarWarsUniverse {
             jsonData = await fetchResult.json();
             starShipData.push(...jsonData.results);
         }
-        this._validateData(starShipData);
+        await this._validateData(starShipData);
     }
 
     get theBestStarship() {
@@ -55,7 +55,7 @@ export default class StarWarsUniverse {
         }
     }
 
-    _validateData(starShipsRawData) {
+    async _validateData(starShipsRawData) {
         let filteredShipData = starShipsRawData.filter((shipRawData) => this._isValidConsumable(shipRawData) && this._isValidPassenger(shipRawData));
 
         filteredShipData.forEach((currentShip) => {
