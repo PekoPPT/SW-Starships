@@ -18,16 +18,19 @@ export default class StarWarsUniverse {
 
     async _createStarships() {
         let starShipData = [];
-        let fetchResult = await fetch("https://swapi.booost.bg/api/starships");
-        let jsonData = await fetchResult.json()
-        starShipData.push(...jsonData.results);
 
-        while (jsonData.next !== null) {
-            let fetchResult = await fetch(jsonData.next);
-            jsonData = await fetchResult.json();
-            starShipData.push(...jsonData.results);
+        for (let i = 1; i <= 36; i++) {
+            try {
+
+                let fetchResult = await fetch("https://swapi.booost.bg/api/starships/" + i);
+                let jsonData = await fetchResult.json();
+                starShipData.push(jsonData);
+
+            } catch (err) {
+            }
         }
-        await this._validateData(starShipData);
+
+        this._validateData(starShipData);
     }
 
     get theBestStarship() {
@@ -55,12 +58,11 @@ export default class StarWarsUniverse {
         }
     }
 
-    async _validateData(starShipsRawData) {
+    _validateData(starShipsRawData) {
         let filteredShipData = starShipsRawData.filter((shipRawData) => this._isValidConsumable(shipRawData) && this._isValidPassenger(shipRawData));
 
         filteredShipData.forEach((currentShip) => {
             this.starships.push(new Starship(currentShip.name, currentShip.consumables, currentShip.passengers));
         });
-
     }
 }
